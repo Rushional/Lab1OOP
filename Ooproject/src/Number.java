@@ -10,4 +10,12 @@ public class Number {
     public Number(double number) {
         this.number = number;
     }
+
+    public void outputNumber() {
+        System.out.println(number);
+    }
+
+    public String asString() {
+        return String.valueOf(number);
+    }
 }

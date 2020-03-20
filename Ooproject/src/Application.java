@@ -19,6 +19,9 @@ public class Application {
             switch (userInput) {
                 case 1:
                     System.out.println("Input coefficient a: ");
+//                    I know this input is weird,
+//                    but the entire idea to rename double to "number" without any new functionality is weird
+//                    So I'm leaving it like that until questioned (hopefully forever)
                     a.number = scanner.nextDouble();
                     System.out.println("Input coefficient b: ");
                     b.number = scanner.nextDouble();
@@ -28,9 +31,9 @@ public class Application {
                 case 2:
                     var rootCalcPolynomial = new Polynomial(a, b, c);
                     try {
-                        Number[] roots = calculateRoots(rootCalcPolynomial);
-                        if (roots[0].number == roots[1].number) System.out.println("The only root is " + roots[0].number);
-                        else System.out.println("The first root is " + roots[0].number + ", and the second one is " + roots[1].number);
+                        Number[] roots = Polynomial.calculateRoots(rootCalcPolynomial);
+                        if (roots[0].number == roots[1].number) System.out.println("The only root is " + roots[0].asString());
+                        else System.out.println("The first root is " + roots[0].asString() + ", and the second one is " + roots[1].asString());
                     } catch (NegativeDiscriminant negativeDiscriminant) {
                         System.out.println("There are no real roots for this one:(");
                     }
@@ -39,8 +42,8 @@ public class Application {
                     System.out.println("Please input an argument of the polynomial: ");
                     var argument = new Number(scanner.nextDouble());
                     var calcValuePolynomial = new Polynomial(a, b, c);
-                    Number calculatedValue = calculateValue(calcValuePolynomial, argument);
-                    System.out.println("With the argument "+ argument.number + ", the value of the polynomial is " + calculatedValue.number);
+                    Number calculatedValue = Polynomial.calculateValue(calcValuePolynomial, argument);
+                    System.out.println("With the argument "+ argument.asString() + ", the value of the polynomial is " + calculatedValue.asString());
                     break;
                 case 4:
                     var outputPolynomial = new Polynomial(a, b, c);
@@ -58,24 +61,6 @@ public class Application {
         System.out.println("3) Calculate value of a polynomial");
         System.out.println("4) Output a polynomial");
         System.out.println("0) Exit");
-    }
-
-    //If I need roots amount, I can call x.length
-//    I'd probably create another class called RootsCalculator or something like that have this method public there
-    static Number[] calculateRoots(Polynomial polynomial) throws NegativeDiscriminant{
-        var roots = new Number[2];
-        var discriminant = new Number(pow(polynomial.b.number, 2) - 4 * polynomial.a.number * polynomial.c.number);
-        if (discriminant.number < 0) throw new NegativeDiscriminant();
-        roots[0] = new Number((-polynomial.b.number + sqrt(discriminant.number))
-                / (2 * polynomial.a.number));
-        if (discriminant.number == 0) roots[1] = roots[0];
-        else roots[1] = new Number((-polynomial.b.number - sqrt(discriminant.number))
-                / (2 * polynomial.a.number));
-        return roots;
-    }
-
-    private static Number calculateValue(Polynomial polynomial, Number argument) {
-        return new Number(polynomial.a.number * pow(argument.number, 2) + polynomial.b.number * argument.number + polynomial.c.number);
     }
 }
 
